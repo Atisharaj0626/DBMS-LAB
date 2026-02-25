@@ -1,647 +1,215 @@
-SQL> CREATE TABLE Department (
-  2  Department_Id INT PRIMRY KEY,
-  3  Department_Name VARCHAR(100),
-  4  Office_Location VARCHAR(100)
-  5  );
-Department_Id INT PRIMRY KEY,
-                  *
-ERROR at line 2:
-ORA-00907: missing right parenthesis
+
+CREATE TABLE Department (
+Department_Id INT PRIMARY KEY,
+Department_Name VARCHAR(100),
+Office_Location VARCHAR(100)
+);
 
 
-SQL> CREATE TABLE Department (
-  2  Department_Id INT PRIMARY KEY,
-  3  Department_Name VARCHAR(100),
-  4  Office_Location VARCHAR(100)
-  5  );
+CREATE TABLE Faculty (
+Faculty_Id INT PRIMARY KEY,
+Name VARCHAR(100),
+Designation VARCHAR(100),
+Email VARCHAR(100),
+Department_Id INT,
+FOREIGN KEY (Department_Id) REFERENCES Department(Department_Id)
+);
 
-Table created.
+CREATE TABLE Course (
+Course_Id INT PRIMARY KEY,
+Course_Name VARCHAR(100),
+Credits INT,
+Department_Id INT,
+Faculty_Id INT,
+FOREIGN KEY (Department_Id) REFERENCES Department(Department_Id),
+FOREIGN KEY (Faculty_Id) REFERENCES Faculty(Faculty_Id)
+);
 
-SQL> CREATE TABLE Faculty (
-  2  Faculty_Id INT PRIMARY KEY,
-  3  Name VARCHAR(100),
-  4  Designation VARCHAR(100),
-  5  Email VARCHAR(100),
-  6  Department_Id INT,
-  7  FOREIGN KEY (Department_Id) REFERENCES Department(Department_Id)
-  8  );
-
-Table created.
-
-SQL> CREATE TABLE Course (
-  2  Course_Id INT PRIMARY KEY,
-  3  Course_Name VARCHAR(100),
-  4  Credits INT,
-  5  Department_Id INT,
-  6  Faculty_Id INT,
-  7  FOREIGN KEY (Department_Id) REFERENCES Department(Department_Id),
-  8  FOREIGN KEY (Faculty_Id) REFERENCES Faculty(Faculty_Id)
-  9  );
-
-Table created.
-
-SQL> CREATE TABLE Student (
-  2  Student_Id INT PRIMARY KEY,
-  3  Name VARCHAR(100),
-  4  Date_Of_Birth DATE,
-  5  Gender VARCHAR(100,
-  6  Contact_Number VARCHAR(15),
-  7  Department_Id INT,
-  8  FOREIGN KEY (Department_Id) REFERENCES Department(Department_Id)
-  9  );
-Gender VARCHAR(100,
-                  *
-ERROR at line 5:
-ORA-00907: missing right parenthesis
-
-
-SQL> CREATE TABLE Student (
-  2  Student_Id INT PRIMARY KEY,
-  3  Name VARCHAR(100),
-  4  Date_Of_Birth DATE,
-  5  Gender VARCHAR(10),
-  6  Contact_Number VARCHAR(15),
-  7  Department_Id INT,
-  8  FOREIGN KEY (Department_Id) REFERENCES Department(Department_Id)
-  9  );
 CREATE TABLE Student (
-             *
-ERROR at line 1:
-ORA-00955: name is already used by an existing object
+Student_Id INT PRIMARY KEY,
+Name VARCHAR(100),
+Date_Of_Birth DATE,
+Gender VARCHAR(10),
+Contact_Number VARCHAR(15),
+Department_Id INT,
+FOREIGN KEY (Department_Id) REFERENCES Department(Department_Id)
+);
 
 
-SQL> DROP TABLE Student CASCADE CONSTRAINTS;
 
-Table dropped.
+CREATE TABLE Enrollment (
+Enrollment_Id INT PRIMARY KEY,
+Student_Id INT,
+Course_Id INT,
+Semester VARCHAR(20),
+Grade VARCHAR(5),
+FOREIGN KEY (Student_Id) REFERENCES Student(Student_Id),
+FOREIGN KEY (Course_Id) REFERENCES Course(Course_Id)
+);
 
-SQL> CREATE TABLE Student (
-  2  Student_Id INT PRIMARY KEY,
-  3  Name VARCHAR(100),
-  4  Date_Of_Birth DATE,
-  5  Gender VARCHAR(10),
-  6  Contact_Number VARCHAR(15),
-  7  Department_Id INT,
-  8  FOREIGN KEY (Department_Id) REFERENCES Department(Department_Id)
-  9  );
 
-Table created.
-
-SQL> CREATE TABLE Enrolment (
-  2
-SQL> CREATE TABLE Enrollment (
-  2  Enrollment_Id INT PRIMARY KEY,
-  3  Student_Id INT,
-  4  Course_Id INT,
-  5  Semester VARCHAR(20),
-  6  Grade VARCHAR(5),
-  7  FOREIGN KEY (Student_Id) REFERENCES Student(Student_Id),
-  8  FOREIGN KEY (Course_Id) REFERENCES Course(Course_Id)
-  9  );
-
-Table created.
-
-SQL> INSERT INTO Department VALUES
-  2  ('101','Computer Science Engineering','Block A');
-
-1 row created.
-
-SQL> INSERT INTO Department VALUES
-  2  ('102','Mechanical Engineering','Block B');
-
-1 row created.
-
-SQL> INSERT INTO Department VALUES
-  2  ('103','Civil Engineering','Block c');
-
-1 row created.
-
-SQL> INSERT INTO Department VALUES
-  2  ('104','3DAG','Block D');
-
-1 row created.
-
-SQL> INSERT INTO Department VALUES
-  2  ('104','ECE','Block E');
 INSERT INTO Department VALUES
-*
-ERROR at line 1:
-ORA-00001: unique constraint (SYSTEM.SYS_C008316) violated
+('101','Computer Science Engineering','Block A');
 
+INSERT INTO Department VALUES
+('102','Mechanical Engineering','Block B');
 
-SQL> INSERT INTO Department VALUES
-  2  ('105','ECE','Block F');
+INSERT INTO Department VALUES
+('103','Civil Engineering','Block c');
 
-1 row created.
+INSERT INTO Department VALUES
+('104','3DAG','Block D');
 
-SQL> INSERT INTO Depatment VALUES
-  2  ('106','Robotices','Block E');
-INSERT INTO Depatment VALUES
-            *
-ERROR at line 1:
-ORA-00942: table or view does not exist
+INSERT INTO Department VALUES
+('105','ECE','Block F');
 
+INSERT INTO Department VALUES
+('106','Robotices','Block G');
 
-SQL> INSERT INTO Department VALUES
-  2  ('106','Robotices','Block G');
+INSERT INTO Department VALUES
+('107','EEE','Block H');
 
-1 row created.
+ INSERT INTO Department VALUES
+('108','C.E With C.W.C','Block I');
 
-SQL> INSERT INTO Departmrnt VALUES
-  2  ('107','EEE','Block H');
-INSERT INTO Departmrnt VALUES
-            *
-ERROR at line 1:
-ORA-00942: table or view does not exist
+INSERT INTO Department VALUES
+('109','APPLIED SCE 1','Block J');
 
+INSERT INTO Department VALUES
+('110','CSE(AI0)','Block K');
 
-SQL> INSERT INTO Department VALUES
-  2  ('107','EEE','Block H');
+INSERT INTO Faculty VALUES
+('201','Prof. Murlidhar Prasad Singh(HOD)',
+'Assistant Professor,Head Of Department',
+'singhmurlidhar@gmail.com','101');
 
-1 row created.
+INSERT INTO Faculty VALUES
+('202','Prof. Md. Ehtashansoul Haque(HOD)',
+'Assistant Professor',
+'ehtashan47@gmail.com','110');
 
-SQL> INSERT INTO Department VALUES
-  2  ('108','C.E With C.W.C','Block I');
+INSERT INTO Faculty VALUES
+('203','Prof. Murlidhar Prasad Singh(HOD)',
+'Assistant Professor,Head Of Department',
+'singhmurlidhar@gmail.com','104');
 
-1 row created.
+INSERT INTO Faculty VALUES
+('204','Sujeet Kumar',
+'Assistant Professor',
+'ksujeet.cs@gmail.com','109');
 
-SQL> INSERT INTO Department VALUES
-  2  ('109','APPLIED SCE 1','Block J');
+INSERT INTO Faculty VALUES
+('205','prof. Manisha Kumari Singh',
+'Assistant Professor',
+'manisha.ks241@gmail.com','105');
 
-1 row created.
+INSERT INTO Faculty VALUES
+('206','Prof. Md. Izhar',
+'Assistant Professor',
+'mdizhar1996@gmail.com','106');
 
-SQL> INSERT INTO Department VALUES
-  2  ('110','CSE(AI0)',Blocl k');
-ERROR:
-ORA-01756: quoted string not properly terminated
+INSERT INTO Faculty VALUES
+('207','Prof. Hare Krishna Mishra',
+'Assistant Professor',
+'hare.dbit@gmail.com','107');
 
+INSERT INTO Faculty VALUES
+('208','Prof. Arbind Kumar Amar',
+'Associate Professor,Principal_in_charge',
+'ak_amar73@yahoo.com','102');
 
-SQL> INSERT INTO Department VALUES
-  2  ('110','CSE(AI0)','Block K');
 
-1 row created.
+INSERT INTO Faculty VALUES
+('209','Prof. Akhilesh Kumar(HOD)',
+'Civil Engineering With Computer Application',
+'akhileshkumar3804@gmail.com','108');
 
-SQL> SELECT*FROM Department;
-
-DEPARTMENT_ID
--------------
-DEPARTMENT_NAME
---------------------------------------------------------------------------------
-OFFICE_LOCATION
---------------------------------------------------------------------------------
-          101
-Computer Science Engineering
-Block A
+INSERT INTO Faculty VALUES
+('210','Prof. Kunal Kumar(HOD)',
+'Designation: Assistant Professor 1 Of Department',
+'kunal1989kumar@gmail.com','103');
 
-          102
-Mechanical Engineering
-Block B
-
-DEPARTMENT_ID
--------------
-DEPARTMENT_NAME
---------------------------------------------------------------------------------
-OFFICE_LOCATION
---------------------------------------------------------------------------------
-
-          103
-Civil Engineering
-Block c
-
-          104
-3DAG
-
-DEPARTMENT_ID
--------------
-DEPARTMENT_NAME
---------------------------------------------------------------------------------
-OFFICE_LOCATION
---------------------------------------------------------------------------------
-Block D
-
-          105
-ECE
-Block F
-
-          106
-
-DEPARTMENT_ID
--------------
-DEPARTMENT_NAME
---------------------------------------------------------------------------------
-OFFICE_LOCATION
---------------------------------------------------------------------------------
-Robotices
-Block G
-
-          107
-EEE
-Block H
-
-
-DEPARTMENT_ID
--------------
-DEPARTMENT_NAME
---------------------------------------------------------------------------------
-OFFICE_LOCATION
---------------------------------------------------------------------------------
-          108
-C.E With C.W.C
-Block I
-
-          109
-APPLIED SCE 1
-Block J
+INSERT INTO Course VALUES
+('301','Surveying',4,'103','210');
 
-DEPARTMENT_ID
--------------
-DEPARTMENT_NAME
---------------------------------------------------------------------------------
-OFFICE_LOCATION
---------------------------------------------------------------------------------
+ INSERT INTO Course VALUES
+('302','Computer Design',5,'108','209');
 
-          110
-CSE(AI0)
-Block K
-
+INSERT INTO Course VALUES
+('303','Science',6,'102','208');
 
-10 rows selected.
+INSERT INTO Course VALUES
+('304','Mathematics',2,'107','207');
 
-SQL> SET LINESIZE 200
-SQL> SET PAGESIZE 100
-SQL> SET WRAP OFF
-SQL> COLUMN Department_Id FORMAT A30;
-SQL> SELECT*FROM Department;
+INSERT INTO Course VALUES
+('305','C++',3,'101','201');
 
-DEPARTMENT_ID DEPARTMENT_NAME                                                                                      OFFICE_LOCATION
-------------- ---------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------
-   ########## Computer Science Engineering                                                                         Block A
-   ########## Mechanical Engineering                                                                               Block B
-   ########## Civil Engineering                                                                                    Block c
-   ########## 3DAG                                                                                                 Block D
-   ########## ECE                                                                                                  Block F
-   ########## Robotices                                                                                            Block G
-   ########## EEE                                                                                                  Block H
-   ########## C.E With C.W.C                                                                                       Block I
-   ########## APPLIED SCE 1                                                                                        Block J
-   ########## CSE(AI0)                                                                                             Block K
+INSERT INTO Course VALUES
+('306','EGD',1,'110','202');
 
-10 rows selected.
+INSERT INTO Course VALUES
+('307','DBMS',4,'104','205')
 
-SQL> COLUMN DEPARTMENT_ID FORMAT9999;
-SQL> SELECT*FROM Department;
+INSERT INTO Course VALUES
+('308','ML',6,'109','204');
 
-DEPARTMENT_ID DEPARTMENT_NAME                                                                                      OFFICE_LOCATION
-------------- ---------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------
-          101 Computer Science Engineering                                                                         Block A
-          102 Mechanical Engineering                                                                               Block B
-          103 Civil Engineering                                                                                    Block c
-          104 3DAG                                                                                                 Block D
-          105 ECE                                                                                                  Block F
-          106 Robotices                                                                                            Block G
-          107 EEE                                                                                                  Block H
-          108 C.E With C.W.C                                                                                       Block I
-          109 APPLIED SCE 1                                                                                        Block J
-          110 CSE(AI0)                                                                                             Block K
+INSERT INTO Course VALUES
+('309','AI',5,'105','205');
 
-10 rows selected.
+INSERT INTO Course VALUES
+('310','Computer Network',3,'106','206');
 
-SQL> INSERT INTO Faculty VALUES ('201',
-  2  COMMIT;
-COMMIT
-     *
-ERROR at line 2:
-ORA-00917: missing comma
-
-
-SQL> COMMIT;
-
-Commit complete.
-
-SQL> INSERT INTO Faculty VALUES ('201','Prof. Murliprasad singh(HOD)','Assistant Professor, Head Of Department','singhmurlidhar@gmail.com','DO1');
-INSERT INTO Faculty VALUES ('201','Prof. Murliprasad singh(HOD)','Assistant Professor, Head Of Department','singhmurlidhar@gmail.com','DO1')
-                                                                                                                                      *
-ERROR at line 1:
-ORA-01722: invalid number
-
-
-SQL> INSERT INTO Faculty VALUES ('201','Prof. Murliprasad singh(HOD)',Assistant Professor,Head Of Department','singhmurlidhar@gmail.com','D01');
-ERROR:
-ORA-01756: quoted string not properly terminated
-
-
-SQL> INSERT INTO Faculty VALUES ('201','Prof. Murlidhar Prasad Singh(HOD)','Assistant Professor,Head Of Department','singhmurlidhar@gmail.com','D01');
-INSERT INTO Faculty VALUES ('201','Prof. Murlidhar Prasad Singh(HOD)','Assistant Professor,Head Of Department','singhmurlidhar@gmail.com','D01')
-                                                                                                                                          *
-ERROR at line 1:
-ORA-01722: invalid number
-
-
-SQL> INSERT INTO Facuty VALUES ('201','Prof. Murlidhar Prasad Singh(HOD)','Assistant Professor,Head Of Department','singhmurlidhar@gmail.com','101');
-INSERT INTO Facuty VALUES ('201','Prof. Murlidhar Prasad Singh(HOD)','Assistant Professor,Head Of Department','singhmurlidhar@gmail.com','101')
-            *
-ERROR at line 1:
-ORA-00942: table or view does not exist
-
-
-SQL> SELECT*FROM Faculty;
-rows will be truncated
-
-rows will be truncated
-
-
-no rows selected
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('201','Prof. Murlidhar Prasad Singh(HOD)',
-  3  'Assistant Professor,Head Of Department',
-  4  'singhmurlidhar@gmail.com','101');
-
-1 row created.
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('202','Prof. Md. Ehtashansoul Haque(HOD)',
-  3  'Assistant Professor',
-  4  'ehtashan47@gmail.com','110');
-
-1 row created.
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('203','Prof. Murlidhar Prasad Singh(HOD)',
-  3  'Assistant Professor,Head Of Department',
-  4  'singhmurlidhar@gmail.com','104');
-
-1 row created.
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('204','Sujeet Kumar',
-  3  'Assistant Professor',
-  4  'ksujeet.cs@gmail.com','109');
-
-1 row created.
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('205','prof. Manisha Kumari Singh',
-  3  'Assistant Professor',
-  4  'manisha.ks241@gmail.com','105');
-
-1 row created.
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('206','Prof. Md. Izhar',
-  3  'Assistant Professor',
-  4  'mdizhar1996@gmail.com','106');
-
-1 row created.
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('207','Prof. Hare Krishna Mishra',
-  3  'Assistant Professor',
-  4  'hare.dbit@gmail.com','107');
-
-1 row created.
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('208','Prof. Arbind Kumar Amar',
-  3  'Associate Professor,Principal_in_charge',
-  4  'ak_amar73@yahoo.com','102');
-
-1 row created.
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('209','Prof. Akhilesh Kumar(HOD)',
-  3  'Civil Engineering With Computer Application',
-  4  'akhileshkumar3804@gmail.com','108');
-
-1 row created.
-
-SQL> INSERT INTO Faculty VALUES
-  2  ('210','Prof. Kunal Kumar(HOD)',
-  3  'Designation: Assistant Professor 1 Of Department',
-  4  'kunal1989kumar@gmail.com','103');
-
-1 row created.
-
-SQL> SELECT* FROM Faculty;
-rows will be truncated
-
-rows will be truncated
-
-
-FACULTY_ID NAME                                                                                                 DESIGNATION
----------- ---------------------------------------------------------------------------------------------------- ----------------------------------------------------------------------------------------
-       201 Prof. Murlidhar Prasad Singh(HOD)                                                                    Assistant Professor,Head Of Department
-       202 Prof. Md. Ehtashansoul Haque(HOD)                                                                    Assistant Professor
-       203 Prof. Murlidhar Prasad Singh(HOD)                                                                    Assistant Professor,Head Of Department
-       204 Sujeet Kumar                                                                                         Assistant Professor
-       205 prof. Manisha Kumari Singh                                                                           Assistant Professor
-       206 Prof. Md. Izhar                                                                                      Assistant Professor
-       207 Prof. Hare Krishna Mishra                                                                            Assistant Professor
-       208 Prof. Arbind Kumar Amar                                                                              Associate Professor,Principal_in_charge
-       209 Prof. Akhilesh Kumar(HOD)                                                                            Civil Engineering With Computer Application
-       210 Prof. Kunal Kumar(HOD)                                                                               Designation: Assistant Professor 1 Of Department
-
-10 rows selected.
-
-SQL> INSERT INTO Course VALUES
-  2  ('301','Surveying',4,'103','210');
-
-1 row created.
-
-SQL> INSERT INTO Course VALUES
-  2  ('302','Computer Design',5,'108','209');
-
-1 row created.
-
-SQL> INSERT INTO Course VALUES
-  2  ('303','Science',6,'102','208');
-
-1 row created.
-
-SQL> INSERT INTO Course VALUES
-  2  ('304','Mathematics',2,'107','207');
-
-1 row created.
-
-SQL> INSERT INTO Course VALUES
-  2  ('305','C++',3,'101','201');
-
-1 row created.
-
-SQL> INSERT INTO Course VALUES
-  2  ('306','EGD',1,'110','202');
-
-1 row created.
-
-SQL> INSERT INTO Course VALUES
-  2  ('307','DBMS',4,'104','205');
-
-1 row created.
-
-SQL> INSERT INTO Course VALUES
-  2  ('308','ML',6,'109','204');
-
-1 row created.
-
-SQL> INSERT INTO Course VALUES
-  2  ('309','AI',5,'105','205');
-
-1 row created.
-
-SQL> INSERT INTO Courses VALUES
-  2  ('310','Computer Network',3,'106','206');
-INSERT INTO Courses VALUES
-            *
-ERROR at line 1:
-ORA-00942: table or view does not exist
-
-
-SQL> INSERT INTO Course VALUES
-  2  ('310','Computer Network',3,'106','206');
-
-1 row created.
-
-SQL> SELECT * FROM Course;
-
- COURSE_ID COURSE_NAME                                                                                             CREDITS DEPARTMENT_ID FACULTY_ID
----------- ---------------------------------------------------------------------------------------------------- ---------- ------------- ----------
-       301 Surveying                                                                                                     4           103        210
-       302 Computer Design                                                                                               5           108        209
-       303 Science                                                                                                       6           102        208
-       304 Mathematics                                                                                                   2           107        207
-       305 C++                                                                                                           3           101        201
-       306 EGD                                                                                                           1           110        202
-       307 DBMS                                                                                                          4           104        205
-       308 ML                                                                                                            6           109        204
-       309 AI                                                                                                            5           105        205
-       310 Computer Network                                                                                              3           106        206
-
-10 rows selected.
-
-SQL> INSERT INTO Student VALUES
-  2  ('401','Simran Kumari',
-  3  '12_AUG_04','Female',
-  4  '8709566078','110');
-
-1 row created.
-
-SQL> INSERT INTO Student VALUES
-  2  ('405','Ankita Mishra',
-  3  '16_OCT_05','Female',
-  4  '7346586721','104');
-
-1 row created.
-
-SQL> INSERT INTO Student VALUES
-  2  ('402''Mayank Raj',
-  3  '11_OCT_05','Male',
-  4  '2375629033','109');
 INSERT INTO Student VALUES
-            *
-ERROR at line 1:
-ORA-00947: not enough values
+('401','Simran Kumari',
+'12_AUG_04','Female',
+'8709566078','110');
 
+INSERT INTO Student VALUES
+('405','Ankita Mishra',
+'16_OCT_05','Female',
+'7346586721','104');
 
-SQL> INSERT INTO Student VALUES
-  2  ('406','Mayank Raj',
-  3  '11_OCT_05','Male',
-  4  '2375629083','109');
+INSERT INTO Student VALUES
+('402''Mayank Raj',
+'11_OCT_05','Male',
+'2375629033','109');
 
-1 row created.
+INSERT INTO Student VALUES
+('406','Mayank Raj',
+'11_OCT_05','Male',
+'2375629083','109');
 
-SQL> INSERT INTO Student VALUES
-  2  ('407',Atisha RAJ',
-  3  '15_JAN_05','Female'
-  4  '3452887904','105');
-ERROR:
-ORA-01756: quoted string not properly terminated
+ INSERT INTO Student VALUES
+ ('407','Atisha RAJ',
+ '15_JAN_05','Female',
+'3452887904','105');
 
+INSERT INTO Student VALUES
+('408','Suhani kumari',
+'21_AUG_04','Female',
+'9563346234','106');
 
-SQL> INSERT INTO Student VALUES
-  2  ('407','Atisha RAJ',
-  3  '15_JAN_05','Female',
-  4  '3452887904','105');
+INSERT INTO Student VALUES
+('409','Khushi kumari',
+'11_DEC_04','FEMALE',
+'5488943500','103');
 
-1 row created.
+INSERT INTO Student VALUES
+('410','Sejal Kumari',
+'11_DEC_04','FEMALE',
+'8252132586','108');
 
-SQL> INSERT INTO Student VALUES
-  2  ('408','Suhani kumari',
-  3  '21_AUG_04','Female',
-  4  '9563346234','106');
+INSERT INTO Student VALUES
+('411','Raushan kumar',
+'21_AUG_04','MALE',
+'8744352300','102');
 
-1 row created.
+INSERT INTO Student VALUES
+('412','Tannu Kumari',
+'11_NOV_05','FEMALE',
+'4328876521','107');
 
-SQL> INSERT INTO Student VALUES
-  2  ('409','Khushi kumari,
-  3  INSERT INTO Student VALUES
-  4  ('408','Khushi kumari',
-  5  '11_DEC_04','FEMALE'
-  6  '5488943500','103');
-ERROR:
-ORA-01756: quoted string not properly terminated
-
-
-SQL> INSERT INTO Student VALUES
-  2  ('409','Khushi kumari',
-  3  '11_DEC_04','FEMALE',
-  4  '5488943500','103');
-
-1 row created.
-
-SQL> INSERT INTO Student VALUES
-  2  ('410','Sejal Kumari',
-  3  '11_DEC_04','FEMALE',
-  4  '8252132586','108');
-
-1 row created.
-
-SQL> INSERT INTO Student VALUES
-  2  ('411','Raushan kumar',
-  3  '21_AUG_04','MALE',
-  4  '8744352300','102');
-
-1 row created.
-
-SQL> INSERT INTO Student VALUES
-  2  ('412','Tannu Kumari',
-  3  '11_NOV_05','FEMALE',
-  4  '4328876521','107');
-
-1 row created.
-
-SQL> INSERT INTO Student VALUES
-  2  ('413','Rahul Kumar',
-  3  '18_AUG_05','MALE',
-  4  '9840658821','101');
-
-1 row created.
-
-SQL> INSERT INTO Enrollment VALUES
-  2  ('
-  3  SELECT * FROM Student;
-ERROR:
-ORA-01756: quoted string not properly terminated
-
-
-SQL> SELECT * FROM Student;
-
-STUDENT_ID NAME                                                                                                 DATE_OF_B GENDER     CONTACT_NUMBER  DEPARTMENT_ID
----------- ---------------------------------------------------------------------------------------------------- --------- ---------- --------------- -------------
-       401 Simran Kumari                                                                                        12-AUG-04 Female     8709566078                110
-       405 Ankita Mishra                                                                                        16-OCT-05 Female     7346586721                104
-       406 Mayank Raj                                                                                           11-OCT-05 Male       2375629083                109
-       407 Atisha RAJ                                                                                           15-JAN-05 Female     3452887904                105
-       408 Suhani kumari                                                                                        21-AUG-04 Female     9563346234                106
-       409 Khushi kumari                                                                                        11-DEC-04 FEMALE     5488943500                103
-       410 Sejal Kumari                                                                                         11-DEC-04 FEMALE     8252132586                108
-       411 Raushan kumar                                                                                        21-AUG-04 MALE       8744352300                102
-       412 Tannu Kumari                                                                                         11-NOV-05 FEMALE     4328876521                107
-       413 Rahul Kumar                                                                                          18-AUG-05 MALE       9840658821                101
-
-10 rows selected.
-
-SQL> INSERT INTO Enrollment VALUES
-  2  ('401','301',5,'A');
-INSERT INTO Enrollment VALUES
-            *
-ERROR at line 1:
-ORA-00947: not enough values
+INSERT INTO Student VALUES
+('413','Rahul Kumar',
+'18_AUG_05','MALE',
+'9840658821','101');
